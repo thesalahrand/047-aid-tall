@@ -4,7 +4,7 @@ I successfully completed a **Fiverr order** on **December 21, 2024**. It was a *
 
 To showcase my work, I’ve decided to **rebuild the project** by covering some of its core requirements. I've **simplified a few features** and **added some new ones**, so it's **not a direct clone** of the original. This serves as one of my **portfolio projects**, aimed at demonstrating my skills as a **Laravel developer**.
 
-> ⚙️ This is the **TALL Stack** version of the project.
+This is the **TALL Stack** version of the project.
 
 ---
 
@@ -17,5 +17,5 @@ Each member includes basic fields like:
 
 Admins can:
 
-- View and manage families and members
-- Use filters for quick data access
+-   View and manage families and members
+-   Use filters for quick data access
