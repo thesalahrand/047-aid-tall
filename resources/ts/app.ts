@@ -1,4 +1,4 @@
-import "./bootstrap";
+import './bootstrap';
 
 function add(a: number, b: number): number {
     const sum: number = a + b;
