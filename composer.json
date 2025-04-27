@@ -15,6 +15,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
@@ -35,6 +36,7 @@
         }
     },
     "scripts": {
+        "analyse": "./vendor/bin/phpstan analyse -v",
         "format": "./vendor/bin/pint -v",
         "format:test": "./vendor/bin/pint --test -v",
         "post-autoload-dump": [
