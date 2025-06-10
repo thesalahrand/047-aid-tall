@@ -1521,6 +1521,95 @@
 
 <body
   class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+
+
+  <div class="hs-accordion-group">
+    <div class="hs-accordion active" id="hs-basic-heading-one">
+      <button
+        class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
+        aria-expanded="true" aria-controls="hs-basic-collapse-one">
+        <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+        </svg>
+        Accordion #1
+      </button>
+      <div id="hs-basic-collapse-one"
+        class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" role="region"
+        aria-labelledby="hs-basic-heading-one">
+        <p class="text-gray-800 dark:text-neutral-200">
+          <em>This is the first item's accordion body.</em> It is hidden by default, until the collapse plugin adds the
+          appropriate classes that we use to style each element. These classes control the overall appearance, as well
+          as the showing and hiding via CSS transitions.
+        </p>
+      </div>
+    </div>
+
+    <div class="hs-accordion" id="hs-basic-heading-two">
+      <button
+        class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
+        aria-expanded="false" aria-controls="hs-basic-collapse-two">
+        <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+        </svg>
+        Accordion #2
+      </button>
+      <div id="hs-basic-collapse-two"
+        class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region"
+        aria-labelledby="hs-basic-heading-two">
+        <p class="text-gray-800 dark:text-neutral-200">
+          <em>This is the second item's accordion body.</em> It is hidden by default, until the collapse plugin adds the
+          appropriate classes that we use to style each element. These classes control the overall appearance, as well
+          as the showing and hiding via CSS transitions.
+        </p>
+      </div>
+    </div>
+
+    <div class="hs-accordion" id="hs-basic-heading-three">
+      <button
+        class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
+        aria-expanded="false" aria-controls="hs-basic-collapse-three">
+        <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+        </svg>
+        Accordion #3
+      </button>
+      <div id="hs-basic-collapse-three"
+        class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region"
+        aria-labelledby="hs-basic-heading-three">
+        <p class="text-gray-800 dark:text-neutral-200">
+          <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the
+          appropriate classes that we use to style each element. These classes control the overall appearance, as well
+          as the showing and hiding via CSS transitions.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
   <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
     @if (Route::has('login'))
       <nav class="flex items-center justify-end gap-4">
@@ -1567,8 +1656,8 @@
               <a href="https://laravel.com/docs" target="_blank"
                 class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
                 <span>Documentation</span>
-                <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg"
-                  class="w-2.5 h-2.5">
+                <svg width="10" height="11" viewBox="0 0 10 11" fill="none"
+                  xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5">
                   <path d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001" stroke="currentColor"
                     stroke-linecap="square" />
                 </svg>
@@ -1588,8 +1677,8 @@
               <a href="https://laracasts.com" target="_blank"
                 class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
                 <span>Laracasts</span>
-                <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg"
-                  class="w-2.5 h-2.5">
+                <svg width="10" height="11" viewBox="0 0 10 11" fill="none"
+                  xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5">
                   <path d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001" stroke="currentColor"
                     stroke-linecap="square" />
                 </svg>
