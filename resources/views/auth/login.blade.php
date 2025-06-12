@@ -21,11 +21,13 @@
 
                 <x-center-aligned-divider :value="__('Or')" />
 
-                <form class="grid gap-y-4">
+                <form action="{{ route('login') }}" method="POST" class="grid gap-y-4">
+                    @csrf
+
                     <div>
                         <x-input-label for="email" class="mb-2" :value="__('Email')" />
-                        <x-text-input id="email" type="text" name="name" :value="old('name')" required autofocus
-                            autocomplete="name" />
+                        <x-text-input id="email" type="text" name="email" :value="old('email')" required autofocus
+                            autocomplete="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -35,19 +37,19 @@
                         {{-- <a class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
                   href="../examples/html/recover-account.html">Forgot password?</a> --}}
                         {{-- </div> --}}
-                        <x-text-input id="password" type="password" name="password" :value="old('name')" required
+                        <x-text-input id="password" type="password" name="password" :value="old('password')" required
                             autocomplete="password" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     <div class="flex items-center space-x-2">
                         <div class="flex">
-                            <x-checkbox-input id="remember-me" name="remember-me" />
+                            <x-checkbox-input id="remember" name="remember" />
                         </div>
-                        <x-input-label for="remember-me" :value="__('Remember me')" />
+                        <x-input-label for="remember" :value="__('Remember me')" />
                     </div>
 
-                    <x-solid-button type="button">{{ __('Sign in') }}</x-solid-button>
+                    <x-solid-button>{{ __('Sign in') }}</x-solid-button>
                 </form>
             </div>
         </div>
