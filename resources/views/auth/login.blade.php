@@ -14,10 +14,12 @@
             </div>
 
             <div class="mt-6">
-                <x-white-button type="button" class="w-full">
-                    <x-icons.google class="w-4" />
-                    {{ __('Sign in with Google') }}
-                </x-white-button>
+                <a href="{{ route('auth.redirect', ['provider' => 'google']) }}">
+                    <x-white-button type="button" class="w-full">
+                        <x-icons.google class="w-4" />
+                        {{ __('Sign in with Google') }}
+                    </x-white-button>
+                </a>
 
                 <x-center-aligned-divider :value="__('Or')" />
 
