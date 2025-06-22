@@ -37,8 +37,19 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (): array => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function providerAuthenticated(string $providerName = 'google'): static
+    {
+        return $this->state(fn (): array => [
+            'provider_name' => $providerName,
+            'provider_id' => fake()->unique()->uuid(),
+            'provider_token' => Str::random(60),
+            'provider_refresh_token' => Str::random(60),
+            'password' => null,
         ]);
     }
 }
