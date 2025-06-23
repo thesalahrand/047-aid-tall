@@ -4,6 +4,10 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Contracts\Provider as SocialiteProvider;
+use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\User as OAuth2User;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -40,6 +44,109 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertGuest();
+    }
+
+    public function test_redirects_to_google_oauth_url(): void
+    {
+        $response = $this->get(route('auth.redirect', 'google'));
+
+        $response->assertStatus(302);
+
+        $redirectUrl = $response->getTargetUrl();
+
+        $parsedQuery = [];
+        parse_str(parse_url($redirectUrl)['query'] ?? '', $parsedQuery);
+
+        $this->assertStringStartsWith(
+            'https://accounts.google.com/o/oauth2/auth',
+            $redirectUrl
+        );
+
+        $requiredParams = [
+            'client_id',
+            'redirect_uri',
+            'scope',
+            'response_type',
+            'state',
+        ];
+
+        foreach ($requiredParams as $param) {
+            $this->assertArrayHasKey(
+                $param,
+                $parsedQuery,
+                "Missing required OAuth parameter: {$param}"
+            );
+        }
+    }
+
+    public function test_new_user_can_authenticate_via_google_oauth(): void
+    {
+        $oauth2User = new OAuth2User;
+        $oauth2User->id = fake()->uuid();
+        $oauth2User->name = fake()->name();
+        $oauth2User->email = fake()->email();
+        $oauth2User->token = Str::random(60);
+        $oauth2User->refreshToken = Str::random(60);
+
+        $mockProvider = \Mockery::mock(SocialiteProvider::class);
+        $mockProvider->shouldReceive('user')->andReturn($oauth2User);
+
+        Socialite::shouldReceive('driver')->with('google')->andReturn($mockProvider);
+
+        $response = $this->get(route('auth.callback', 'google'));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertAuthenticated();
+
+        $this->assertEquals(1, User::count());
+
+        $this->assertDatabaseHas(User::class, [
+            'name' => $oauth2User->name,
+            'email' => $oauth2User->email,
+            'password' => null,
+            'provider_name' => 'google',
+            'provider_id' => $oauth2User->id,
+            'provider_token' => $oauth2User->token,
+            'provider_refresh_token' => $oauth2User->refreshToken,
+        ]);
+    }
+
+    public function test_existing_user_can_authenticate_via_google_oauth(): void
+    {
+        $oauth2User = new OAuth2User;
+        $oauth2User->id = fake()->uuid();
+        $oauth2User->name = fake()->name();
+        $oauth2User->email = fake()->email();
+        $oauth2User->token = Str::random(60);
+        $oauth2User->refreshToken = Str::random(60);
+
+        User::factory()->providerAuthenticated()->create([
+            'email' => $oauth2User->email,
+            'provider_id' => $oauth2User->id,
+        ]);
+
+        $mockProvider = \Mockery::mock(SocialiteProvider::class);
+        $mockProvider->shouldReceive('user')->andReturn($oauth2User);
+
+        Socialite::shouldReceive('driver')->with('google')->andReturn($mockProvider);
+
+        $response = $this->get(route('auth.callback', 'google'));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertAuthenticated();
+
+        $this->assertEquals(1, User::count());
+
+        $this->assertDatabaseHas(User::class, [
+            'name' => $oauth2User->name,
+            'email' => $oauth2User->email,
+            'provider_name' => 'google',
+            'provider_id' => $oauth2User->id,
+            'provider_token' => $oauth2User->token,
+            'provider_refresh_token' => $oauth2User->refreshToken,
+        ]);
     }
 
     public function test_users_can_logout(): void
