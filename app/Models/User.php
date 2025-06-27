@@ -21,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'is_admin',
         'provider_name',
         'provider_id',
         'provider_token',
@@ -35,6 +36,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $attributes = [
+        'is_admin' => true,
     ];
 
     /**
