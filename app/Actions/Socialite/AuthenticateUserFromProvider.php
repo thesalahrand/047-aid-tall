@@ -17,12 +17,16 @@ class AuthenticateUserFromProvider
         try {
             $providerUser = Socialite::driver($provider)->user();
 
+            if ($providerUser->getEmail() !== config('demo.admin.email')) {
+                throw new \Exception(__('auth.failed'));
+            }
+
             $user = User::updateOrCreate([
-                'provider_name' => $provider,
-                'provider_id' => $providerUser->getId(),
+                'email' => $providerUser->getEmail(),
             ], [
                 'name' => $providerUser->getName(),
-                'email' => $providerUser->getEmail(),
+                'provider_name' => $provider,
+                'provider_id' => $providerUser->getId(),
                 'provider_token' => $providerUser->token, // @phpstan-ignore-line
                 'provider_refresh_token' => $providerUser->refreshToken, // @phpstan-ignore-line
             ]);
@@ -33,8 +37,8 @@ class AuthenticateUserFromProvider
             }
 
             Auth::login($user);
-        } catch (\Exception) {
-            throw new \Exception(__('Sign in with Google failed.'));
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage() === __('auth.failed') ? __('auth.failed') : __('Sign in with Google failed.'));
         }
     }
 }
