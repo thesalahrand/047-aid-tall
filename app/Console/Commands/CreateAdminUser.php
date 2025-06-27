@@ -33,14 +33,14 @@ class CreateAdminUser extends Command
             return Command::FAILURE;
         }
 
-        $adminUser = User::create([
+        $admin = User::create([
             'name' => 'Test Admin User',
             'email' => config('demo.admin.email'),
             'email_verified_at' => now(),
             'password' => Hash::make(config('demo.admin.password')),
         ]);
 
-        $this->info("Admin user '{$adminUser->email}' created successfully.");
+        $this->info("Admin user '{$admin->email}' created successfully.");
 
         return Command::SUCCESS;
     }
