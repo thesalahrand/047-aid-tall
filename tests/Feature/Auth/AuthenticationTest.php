@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Provider as SocialiteProvider;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,25 +22,46 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+    public function test_admin_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        User::factory()->create([
+            'email' => config('demo.admin.email'),
+            'password' => Hash::make(config('demo.admin.password')),
+        ]);
 
         $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
+            'email' => config('demo.admin.email'),
+            'password' => config('demo.admin.password'),
         ]);
 
         $this->assertAuthenticated();
         $response->assertRedirect(route('dashboard', absolute: false));
     }
 
-    public function test_users_can_not_authenticate_with_invalid_password(): void
+    public function test_admin_can_not_authenticate_with_invalid_email(): void
     {
-        $user = User::factory()->create();
+        User::factory()->create([
+            'email' => config('demo.admin.email'),
+            'password' => Hash::make(config('demo.admin.password')),
+        ]);
 
         $this->post('/login', [
-            'email' => $user->email,
+            'email' => 'wrong.email@example.com',
+            'password' => config('demo.admin.password'),
+        ]);
+
+        $this->assertGuest();
+    }
+
+    public function test_admin_can_not_authenticate_with_invalid_password(): void
+    {
+        User::factory()->create([
+            'email' => config('demo.admin.email'),
+            'password' => Hash::make(config('demo.admin.password')),
+        ]);
+
+        $this->post('/login', [
+            'email' => config('demo.admin.email'),
             'password' => 'wrong-password',
         ]);
 
@@ -79,12 +101,12 @@ class AuthenticationTest extends TestCase
         }
     }
 
-    public function test_new_user_can_authenticate_via_google_oauth(): void
+    public function test_non_existing_admin_can_authenticate_via_google_oauth(): void
     {
         $oauth2User = new OAuth2User;
         $oauth2User->id = fake()->uuid();
         $oauth2User->name = fake()->name();
-        $oauth2User->email = fake()->email();
+        $oauth2User->email = config('demo.admin.email');
         $oauth2User->token = Str::random(60);
         $oauth2User->refreshToken = Str::random(60);
 
@@ -112,18 +134,17 @@ class AuthenticationTest extends TestCase
         ]);
     }
 
-    public function test_existing_user_can_authenticate_via_google_oauth(): void
+    public function test_existing_admin_can_authenticate_via_google_oauth(): void
     {
         $oauth2User = new OAuth2User;
         $oauth2User->id = fake()->uuid();
         $oauth2User->name = fake()->name();
-        $oauth2User->email = fake()->email();
+        $oauth2User->email = config('demo.admin.email');
         $oauth2User->token = Str::random(60);
         $oauth2User->refreshToken = Str::random(60);
 
         User::factory()->providerAuthenticated()->create([
             'email' => $oauth2User->email,
-            'provider_id' => $oauth2User->id,
         ]);
 
         $mockProvider = \Mockery::mock(SocialiteProvider::class);

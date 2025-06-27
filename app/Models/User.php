@@ -20,7 +20,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
+        'is_admin',
         'provider_name',
         'provider_id',
         'provider_token',
@@ -35,6 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $attributes = [
+        'is_admin' => true,
     ];
 
     /**
