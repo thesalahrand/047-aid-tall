@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+@import '../../node_modules/preline/variants.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../../node_modules/preline/dist/*.js';
+
+@plugin '@tailwindcss/forms';
+
+@theme {
+    --font-sans: 'Poppins', sans-serif;
+}
+
+/* Adds pointer cursor to buttons */
+@layer base {
+    button:not(:disabled),
+    [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+/* Defaults hover styles on all devices */
+@custom-variant hover (&:hover);
