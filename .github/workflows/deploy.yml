@@ -41,6 +41,6 @@ jobs:
             php artisan optimize
             php artisan storage:link
 
-            chown -R ${{ secrets.USERNAME }}:www-data ./
-            chmod -R 755 ./
-            chmod -R 775 ./bootstrap/cache ./storage
+            sudo chown -R ${{ secrets.USERNAME }}:www-data ./
+            sudo chmod -R 755 ./
+            sudo chmod -R 775 ./bootstrap/cache ./storage
