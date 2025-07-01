@@ -1,0 +1,46 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          script: |
+            if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+              cd /var/www/047-aid-tall-master
+              git pull origin master
+              composer install --no-dev --optimize-autoloader
+            elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+              cd /var/www/047-aid-tall-develop
+              git pull origin develop
+              composer install
+            fi
+
+            npm install
+            npm run build
+
+            php artisan migrate --force
+            php artisan optimize:clear
+            php artisan optimize
+            php artisan storage:link
+
+            sudo chown -R ${{ secrets.USERNAME }}:www-data ./
+            sudo chmod -R 755 ./
+            sudo chmod -R 775 ./bootstrap/cache ./storage
