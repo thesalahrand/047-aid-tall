@@ -13,6 +13,8 @@
         </p> --}}
             </div>
 
+            <span>Testing CI/CD</span>
+
             <div class="mt-6">
                 <a href="{{ route('auth.redirect', ['provider' => 'google']) }}">
                     <x-white-button type="button" class="w-full">
