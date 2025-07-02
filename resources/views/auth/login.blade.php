@@ -15,6 +15,9 @@
 
             <span>Testing CI/CD</span>
             <span>Testing CI/CD</span>
+            <span>Testing CI/CD</span>
+            <span>Testing CI/CD</span>
+            <span>Testing CI/CD</span>
 
             <div class="mt-6">
                 <a href="{{ route('auth.redirect', ['provider' => 'google']) }}">
