@@ -25,11 +25,11 @@ jobs:
           script: |
             if [ "${{ github.ref }}" = "refs/heads/master" ]; then
               cd /var/www/047-aid-tall-master
-              git pull origin master
+              git reset --hard origin/master
               composer install --no-dev --optimize-autoloader
             elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
               cd /var/www/047-aid-tall-develop
-              git pull origin develop
+              git reset --hard origin/develop
               composer install
             fi
 
